@@ -1,5 +1,6 @@
-package material.com.materialdesignexample;
+package material.com.materialdesign;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,15 +19,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import material.com.materialdesign.RecyclerAdapter;
+import material.com.materialdesign.RecyclerModel;
+import material.com.materialdesignexample.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.ApiCallFinishedListener {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     GridLayoutManager layoutManager;
     List<RecyclerModel> data_list;
+    Context progressDialogContext;
+    AsyncTaskApiCall.ApiCallFinishedListener apiCallFinishedInterfaceReferrence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +40,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.recyclerview);
         data_list=new ArrayList<>();
-        apiCall(0);
+        //apiCall(0); /**This is for normal AsyncTask call from same Activity*/
+        progressDialogContext=this;
+        apiCallFinishedInterfaceReferrence=this;
+        new AsyncTaskApiCall(progressDialogContext,apiCallFinishedInterfaceReferrence,0).execute(0);
         layoutManager=new GridLayoutManager(this,3,GridLayoutManager.HORIZONTAL,false);
 
         recyclerView.setLayoutManager(layoutManager);
         adapter=new RecyclerAdapter(this,data_list);
         recyclerView.setAdapter(adapter);
-        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(layoutManager.findFirstCompletelyVisibleItemPosition() == data_list.size()-1){
-                    apiCall(data_list.get(data_list.size()-1).getId());
-                }
-            }
-        });*/
-
     }
 
     private void apiCall(final int id) {
@@ -85,5 +85,21 @@ public class MainActivity extends AppCompatActivity {
         };
 
         task.execute(id);
+    }
+
+    @Override
+    public void onApiCallFinished(JSONArray responseArray) {
+        try{
+            for(int i=0;i<responseArray.length();i++) {
+                JSONObject object=responseArray.getJSONObject(i);
+                RecyclerModel data = new RecyclerModel(object.getString("name"), object.getString("image"),object.getInt("id"));
+                Log.d("TAG:DEBUGGER", "" + object.get("name") + object.get("image"));
+                data_list.add(data);
+                adapter.notifyDataSetChanged();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }
