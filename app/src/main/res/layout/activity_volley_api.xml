@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="material.com.materialdesign.MainActivity">
+    tools:context="material.com.materialdesign.volley.VolleyApi">
 
     <Button
-        android:id="@+id/asyncapi"
+        android:id="@+id/volleyapi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tap for AsyncTask Api Call"
+        android:text="Tap here for VolleyApi call"
         android:textAllCaps="false"
         android:background="@color/colorAccent"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/async_recyclerview"
-        android:layout_width="wrap_content"
+        android:id="@+id/volley_recyclerview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/asyncapi"
+        android:layout_below="@+id/volleyapi"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
         android:visibility="invisible"

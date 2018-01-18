@@ -1,4 +1,4 @@
-package material.com.materialdesignexample;
+package material.com.materialdesign.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+
+import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesignexample.R;
 
 /**
  * Created by user on 13/12/17.
