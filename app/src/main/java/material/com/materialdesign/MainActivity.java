@@ -1,15 +1,15 @@
 package material.com.materialdesign;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,32 +19,39 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.RecyclerAdapter;
-import material.com.materialdesign.RecyclerModel;
+import material.com.materialdesign.adapter.RecyclerAdapter;
+import material.com.materialdesign.async_task.AsyncTaskApiCall;
+import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesign.volley.VolleyApi;
 import material.com.materialdesignexample.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.ApiCallFinishedListener {
+public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.ApiCallFinishedListener,View.OnClickListener {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     GridLayoutManager layoutManager;
     List<RecyclerModel> data_list;
     Context progressDialogContext;
     AsyncTaskApiCall.ApiCallFinishedListener apiCallFinishedInterfaceReferrence;
+    Button asynctask;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView=findViewById(R.id.recyclerview);
         data_list=new ArrayList<>();
+        recyclerView=findViewById(R.id.async_recyclerview);
+        asynctask=findViewById(R.id.asyncapi);
+        next=findViewById(R.id.next);
+        asynctask.setOnClickListener(this);
+        next.setOnClickListener(this);
         //apiCall(0); /**This is for normal AsyncTask call from same Activity*/
         progressDialogContext=this;
         apiCallFinishedInterfaceReferrence=this;
-        new AsyncTaskApiCall(progressDialogContext,apiCallFinishedInterfaceReferrence,0).execute(0);
-        layoutManager=new GridLayoutManager(this,3,GridLayoutManager.HORIZONTAL,false);
+        layoutManager=new GridLayoutManager(this,1,GridLayoutManager.HORIZONTAL,false);
 
         recyclerView.setLayoutManager(layoutManager);
         adapter=new RecyclerAdapter(this,data_list);
@@ -69,9 +76,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
                         data_list.add(data);
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (IOException|JSONException e) {
                     e.printStackTrace();
                 }
                 return null;
@@ -101,5 +106,17 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.asyncapi){
+            recyclerView.setVisibility(View.VISIBLE);
+            new AsyncTaskApiCall(progressDialogContext,apiCallFinishedInterfaceReferrence,0).execute(0);
+        }
+        else if(view.getId()==R.id.next){
+            Intent volleyApi=new Intent(this,VolleyApi.class);
+            startActivity(volleyApi);
+        }
     }
 }

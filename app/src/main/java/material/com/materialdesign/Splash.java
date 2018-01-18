@@ -21,7 +21,7 @@ public class Splash extends AppCompatActivity {
         splashImage=findViewById(R.id.splash_image);
         RotateAnimation rotate = new RotateAnimation(30, 360, Animation.RELATIVE_TO_SELF, 0.5f,  Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setRepeatCount(Animation.INFINITE);
-        rotate.setDuration(1000);
+        rotate.setDuration(100);
         splashImage.startAnimation(rotate);
         new Handler().postDelayed(new Runnable() {
 
@@ -32,7 +32,7 @@ public class Splash extends AppCompatActivity {
                 Splash.this.finish();
 
             }
-        }, 3500);
+        }, 500);
 
     }
 }

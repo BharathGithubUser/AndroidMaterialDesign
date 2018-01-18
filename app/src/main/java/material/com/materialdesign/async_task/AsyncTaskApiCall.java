@@ -1,16 +1,11 @@
-package material.com.materialdesign;
+package material.com.materialdesign.async_task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ProgressBar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.io.IOException;
-import java.util.ArrayList;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,7 +20,7 @@ public class AsyncTaskApiCall extends AsyncTask<Integer,Void,JSONArray> {
     private Context progressDialogContext;
     ProgressDialog progressDialog;
 
-    AsyncTaskApiCall(Context progressDialogContext,ApiCallFinishedListener apiCallFinishedInterfaceReferrence,int id) {
+    public AsyncTaskApiCall(Context progressDialogContext,ApiCallFinishedListener apiCallFinishedInterfaceReferrence,int id) {
         this.id=id;
         this.progressDialogContext=progressDialogContext;
         this.onApiCallFinishedListener=apiCallFinishedInterfaceReferrence;
@@ -48,9 +43,7 @@ public class AsyncTaskApiCall extends AsyncTask<Integer,Void,JSONArray> {
                 Response response = client.newCall(request).execute();
                 responseArray = new JSONArray(response.body().string());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException|JSONException e ) {
                 e.printStackTrace();
             }
             return responseArray;

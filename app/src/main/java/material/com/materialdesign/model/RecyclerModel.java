@@ -1,4 +1,4 @@
-package material.com.materialdesign;
+package material.com.materialdesign.model;
 
 /**
  * Created by user on 13/12/17.
