@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name="material.com.materialdesign.MainActivity" />
-        <activity android:name="material.com.materialdesign.volley.VolleyApi"/>
+        <activity android:name="material.com.materialdesign.volley.VolleyApi" />
+        <activity android:name="material.com.materialdesign.retrofit.RetrofitActivity"></activity>
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ import java.util.List;
 import material.com.materialdesign.MainActivity;
 import material.com.materialdesign.adapter.RecyclerAdapter;
 import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesign.retrofit.RetrofitActivity;
 import material.com.materialdesignexample.R;
 
 public class VolleyApi extends AppCompatActivity implements View.OnClickListener {
@@ -60,7 +61,7 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
             recyclerView.setVisibility(View.VISIBLE);
             volleyApiCall();
         } else if (view.getId() == R.id.next) {
-            Intent main = new Intent(this, MainActivity.class);
+            Intent main = new Intent(this, RetrofitActivity.class);
             startActivity(main);
         }
     }
