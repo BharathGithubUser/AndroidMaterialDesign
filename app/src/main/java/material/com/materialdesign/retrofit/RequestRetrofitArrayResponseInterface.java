@@ -9,8 +9,9 @@ import retrofit2.http.GET;
  * Created by user on 24/1/18.
  */
 
-public interface RequestInterface {
+public interface RequestRetrofitArrayResponseInterface {
 
     @GET("api/v1/get_user_details")
-    Call<List<RetrofitModel>> getApiResponseArray();
+    Call<List<RetrofitArrayModel>> getApiResponseArray();
+
 }

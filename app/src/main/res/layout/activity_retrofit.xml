@@ -7,10 +7,10 @@
     tools:context="material.com.materialdesign.volley.VolleyApi">
 
     <Button
-        android:id="@+id/retrofitapi"
+        android:id="@+id/retrofitapiarray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tap here for Retrofit API call"
+        android:text="Tap here for Retrofit API call for JSON array"
         android:textAllCaps="false"
         android:background="@color/colorAccent"/>
 
@@ -18,10 +18,29 @@
         android:id="@+id/retrofit_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/retrofitapi"
+        android:layout_below="@+id/retrofitapiarray"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
         android:visibility="invisible"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager">
+
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:id="@+id/retrofitapiobject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/retrofit_recyclerview"
+        android:text="Tap here for Retrofit API call for Json Object"
+        android:textAllCaps="false"
+        android:background="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/retrofitobject_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/retrofitapiobject"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
         app:layoutManager="android.support.v7.widget.GridLayoutManager">
 
     </android.support.v7.widget.RecyclerView>

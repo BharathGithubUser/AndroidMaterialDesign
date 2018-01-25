@@ -14,29 +14,28 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import material.com.materialdesignexample.R;
 
-public class RetrofitRecyclerAdapter extends RecyclerView.Adapter<RetrofitRecyclerAdapter.ViewHolder> {
-    private List<RetrofitModel> response;
+public class RetrofitObjectRecyclerAdapter extends RecyclerView.Adapter<RetrofitObjectRecyclerAdapter.ViewHolder> {
+    private List<RetrofitObjectModel> response;
     private Context context;
 
 
-    public RetrofitRecyclerAdapter(Context context,List<RetrofitModel> response) {
+    public RetrofitObjectRecyclerAdapter(Context context, List<RetrofitObjectModel> response) {
         this.response = response;
         this.context = context;
     }
 
     @Override
-    public RetrofitRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RetrofitObjectRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RetrofitRecyclerAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(RetrofitObjectRecyclerAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.name.setText(response.get(i).getName());
         Glide.with(context).load(response.get(i).getImage()).into(viewHolder.image);
