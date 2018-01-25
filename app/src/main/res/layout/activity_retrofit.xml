@@ -18,7 +18,7 @@
         android:id="@+id/retrofit_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/volleyapi"
+        android:layout_below="@+id/retrofitapi"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
         android:visibility="invisible"

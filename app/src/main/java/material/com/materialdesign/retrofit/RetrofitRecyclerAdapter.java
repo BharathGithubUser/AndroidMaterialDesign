@@ -15,15 +15,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import material.com.materialdesignexample.R;
 
 public class RetrofitRecyclerAdapter extends RecyclerView.Adapter<RetrofitRecyclerAdapter.ViewHolder> {
-    private ArrayList<RetrofitModel> response;
+    private List<RetrofitModel> response;
     private Context context;
 
 
-    public RetrofitRecyclerAdapter(Context context,ArrayList<RetrofitModel> response) {
+    public RetrofitRecyclerAdapter(Context context,List<RetrofitModel> response) {
         this.response = response;
         this.context = context;
     }

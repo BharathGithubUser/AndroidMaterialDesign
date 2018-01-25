@@ -1,5 +1,7 @@
 package material.com.materialdesign.retrofit;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -9,6 +11,6 @@ import retrofit2.http.GET;
 
 public interface RequestInterface {
 
-    @GET("api/v1/get_user_details_by_id?Id=2")
-    Call<JsonResponse> getApiResponseArray();
+    @GET("api/v1/get_user_details")
+    Call<List<RetrofitModel>> getApiResponseArray();
 }

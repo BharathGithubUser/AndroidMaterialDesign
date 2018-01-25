@@ -10,10 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import material.com.materialdesign.MainActivity;
+import material.com.materialdesign.model.RecyclerModel;
 import material.com.materialdesignexample.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,14 +32,16 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
     RecyclerView recyclerView;
     RetrofitRecyclerAdapter adapter;
     GridLayoutManager layoutManager;
-    ArrayList<RetrofitModel> data_list;
+    List<RetrofitModel> data_list;
     Button retrofitApi, next;
+    String baseUrl="http://laravel-example.000webhostapp.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TAG = "json_array_req";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit);
+        data_list = new ArrayList<>();
         retrofitApi=findViewById(R.id.retrofitapi);
         next=findViewById(R.id.next);
         recyclerView = findViewById(R.id.retrofit_recyclerview);
@@ -61,26 +68,25 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
         pDialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://laravel-example.000webhostapp.com")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RequestInterface request = retrofit.create(RequestInterface.class);
-        Call<JsonResponse> call = request.getApiResponseArray();
-        call.enqueue(new Callback<JsonResponse>() {
+        Call<List<RetrofitModel>> call = request.getApiResponseArray();
+        call.enqueue(new Callback<List<RetrofitModel>>() {
             @Override
-            public void onResponse(Call<JsonResponse> call,Response<JsonResponse> response) {
-
-                JsonResponse jsonResponse = response.body();
-                Log.d("TAG:","");
-                data_list=new ArrayList<>(Arrays.asList(jsonResponse.getApiResponseArray()));
-                Log.d("TAG",""+data_list);
-                //adapter = new RetrofitRecyclerAdapter(RetrofitActivity.this,data_list);
+            public void onResponse(Call<List<RetrofitModel>> call,Response<List<RetrofitModel>> response) {
+                for(int i=0;i<response.body().size();i++){
+                    RetrofitModel retrofitModel = response.body().get(i);
+                    data_list.add(retrofitModel);
+                }
+                adapter = new RetrofitRecyclerAdapter(RetrofitActivity.this,data_list);
                 recyclerView.setAdapter(adapter);
                 pDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<JsonResponse> call, Throwable t) {
+            public void onFailure(Call<List<RetrofitModel>> call, Throwable t) {
                 Log.d("Error",t.getMessage());
             }
         });
