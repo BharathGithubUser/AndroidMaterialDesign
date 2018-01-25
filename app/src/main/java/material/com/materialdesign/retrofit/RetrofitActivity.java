@@ -9,16 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import material.com.materialdesign.MainActivity;
-import material.com.materialdesign.model.RecyclerModel;
 import material.com.materialdesignexample.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +34,6 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
         TAG = "json_array_req";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit);
-        data_list = new ArrayList<>();
         retrofitApi=findViewById(R.id.retrofitapi);
         next=findViewById(R.id.next);
         recyclerView = findViewById(R.id.retrofit_recyclerview);
@@ -76,10 +68,12 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
         call.enqueue(new Callback<List<RetrofitModel>>() {
             @Override
             public void onResponse(Call<List<RetrofitModel>> call,Response<List<RetrofitModel>> response) {
+               /*This is another method of fetching specific data
                 for(int i=0;i<response.body().size();i++){
                     RetrofitModel retrofitModel = response.body().get(i);
                     data_list.add(retrofitModel);
-                }
+                }*/
+                data_list = response.body();
                 adapter = new RetrofitRecyclerAdapter(RetrofitActivity.this,data_list);
                 recyclerView.setAdapter(adapter);
                 pDialog.dismiss();
