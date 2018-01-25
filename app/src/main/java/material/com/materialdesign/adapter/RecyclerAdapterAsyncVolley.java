@@ -12,18 +12,18 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesign.model.RecyclerModelAsyncVolley;
 import material.com.materialdesignexample.R;
 
 /**
  * Created by user on 13/12/17.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapterAsyncVolley extends RecyclerView.Adapter<RecyclerAdapterAsyncVolley.ViewHolder> {
     private Context mContext;
-    private List<RecyclerModel> data_list;
+    private List<RecyclerModelAsyncVolley> data_list;
 
-    public RecyclerAdapter(Context mContext, List<RecyclerModel> data_list) {  //Constructor for RecyclerAdapter
+    public RecyclerAdapterAsyncVolley(Context mContext, List<RecyclerModelAsyncVolley> data_list) {  //Constructor for RecyclerAdapterAsyncVolley
         this.mContext = mContext;
         this.data_list = data_list;
     }
@@ -41,13 +41,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {  //Inflating the Card View in OnCreateViewHolder
+    public RecyclerAdapterAsyncVolley.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {  //Inflating the Card View in OnCreateViewHolder
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerAdapterAsyncVolley.ViewHolder holder, int position) {
         holder.name.setText(data_list.get(position).getName());
         Glide.with(mContext).load(data_list.get(position).getImage()).into(holder.image);
     }

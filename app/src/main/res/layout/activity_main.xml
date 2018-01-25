@@ -5,33 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="material.com.materialdesign.MainActivity">
-
-    <Button
-        android:id="@+id/asyncapi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tap for AsyncTask Api Call"
-        android:textAllCaps="false"
-        android:background="@color/colorAccent"/>
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/async_recyclerview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/asyncapi"
-        android:orientation="horizontal"
-        android:scrollbars="horizontal"
-        android:visibility="invisible"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager">
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
-    <Button
-        android:id="@+id/next"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:textAllCaps="false"
-        android:background="@color/colorAccent"/>
-
 </RelativeLayout>

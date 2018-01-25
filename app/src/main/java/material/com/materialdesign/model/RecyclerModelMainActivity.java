@@ -1,13 +1,14 @@
 package material.com.materialdesign.model;
 
+import android.content.res.Resources;
+
 /**
- * Created by user on 13/12/17.
+ * Created by user on 25/1/18.
  */
 
-public class RecyclerModel {
+public class RecyclerModelMainActivity {
     private String name;
-    private String image;
-    private int id;
+    private int image;
 
     public String getName() {
         return name;
@@ -17,22 +18,17 @@ public class RecyclerModel {
         this.name = name;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
-    public RecyclerModel(String name, String image,int id) {
+    public RecyclerModelMainActivity(String name, int image) {
         this.name = name;
         this.image = image;
-        this.id=id;
-    }
-
-    public int getId() {
-        return id;
     }
 
 }
