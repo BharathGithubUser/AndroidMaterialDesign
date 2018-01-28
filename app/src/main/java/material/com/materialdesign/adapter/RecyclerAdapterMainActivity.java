@@ -20,10 +20,21 @@ import material.com.materialdesignexample.R;
 public class RecyclerAdapterMainActivity extends RecyclerView.Adapter<RecyclerAdapterMainActivity.ViewHolderRow> {
     Context context;
     List<RecyclerModelMainActivity> rowData;
+    private OnItemClicked onClick;
+
 
     public RecyclerAdapterMainActivity(Context context,List<RecyclerModelMainActivity> rowData) {
         this.context = context;
         this.rowData = rowData;
+    }
+
+    public interface OnItemClicked {
+        void onItemClick(int position);
+    }
+
+    public void setOnClick(OnItemClicked onClick)
+    {
+        this.onClick=onClick;
     }
 
     @Override
@@ -33,8 +44,14 @@ public class RecyclerAdapterMainActivity extends RecyclerView.Adapter<RecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapterMainActivity.ViewHolderRow holder, int position) {
+    public void onBindViewHolder(RecyclerAdapterMainActivity.ViewHolderRow holder, final int position) {
         holder.itemTitle.setText(rowData.get(position).getName());
+        holder.itemTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onItemClick(position);
+            }
+        });
         holder.itemImage.setImageResource(rowData.get(position).getImage());
     }
 
