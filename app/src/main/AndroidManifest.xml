@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name="material.com.materialdesign.volley.VolleyAppController"
         android:allowBackup="true"
@@ -22,7 +27,10 @@
         <activity android:name="material.com.materialdesign.MainActivity" />
         <activity android:name="material.com.materialdesign.volley.VolleyApi" />
         <activity android:name="material.com.materialdesign.retrofit.RetrofitActivity" />
-        <activity android:name="material.com.materialdesign.async_task.AsyncTaskActivity"></activity>
+        <activity android:name="material.com.materialdesign.async_task.AsyncTaskActivity" />
+        <activity
+            android:name="material.com.materialdesign.LoginActivity"
+            android:label="@string/title_activity_login"/>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package material.com.materialdesign.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class RecyclerAdapterMainActivity extends RecyclerView.Adapter<RecyclerAd
     @Override
     public void onBindViewHolder(RecyclerAdapterMainActivity.ViewHolderRow holder, final int position) {
         holder.itemTitle.setText(rowData.get(position).getName());
-        holder.itemTitle.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClick.onItemClick(position);
@@ -63,8 +64,10 @@ public class RecyclerAdapterMainActivity extends RecyclerView.Adapter<RecyclerAd
     public class ViewHolderRow extends RecyclerView.ViewHolder {
         ImageView itemImage;
         TextView itemTitle;
+        CardView cardView;
         public ViewHolderRow(View itemView) {
             super(itemView);
+            cardView= itemView.findViewById(R.id.cardview);
             itemImage = itemView.findViewById(R.id.itemimage);
             itemTitle = itemView.findViewById(R.id.itemtitle);
         }
