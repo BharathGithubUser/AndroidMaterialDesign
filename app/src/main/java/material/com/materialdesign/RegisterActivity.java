@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editTextpassword;
     Button buttonsubmit;
     ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
         SharedPreferencesManager getUserData;
         getUserData = SharedPreferencesManager.getInstance(getApplicationContext());
-        if(getUserData.getUser()!=null){
+        if (getUserData.getUser() != null) {
             editTextname.setText(getUserData.getUser().getName());
             editTextemail.setText(getUserData.getUser().getEmail());
             editTextphone.setText(getUserData.getUser().getPhone());
@@ -71,28 +72,32 @@ public class RegisterActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         LoginRegisterApiInterface request = retrofit.create(LoginRegisterApiInterface.class);
-        Call<RegisterActivityModel> call = request.createUser(name,email,phone,password);
+        Call<RegisterActivityModel> call = request.createUser(name, email, phone, password);
         call.enqueue(new Callback<RegisterActivityModel>() {
             @Override
             public void onResponse(Call<RegisterActivityModel> call, Response<RegisterActivityModel> response) {
-                if(!response.body().getResultCode().equals("Failure")){
-                pDialog.dismiss();
-                SharedPreferencesManager.getInstance(getApplicationContext()).storePreferencesUserLogin(response.body().getUserData());
-                Intent loginActivity = new Intent(RegisterActivity.this,LoginActivity.class);
-                startActivity(loginActivity);
-                finish();
-                }
-                else {
-                    pDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
-                    Log.d("ResponseError",""+response.body());
+                if (response.body() != null) {
+                    if (response.body().getResultCode().equals("Success")) {
+                        pDialog.dismiss();
+                        SharedPreferencesManager.getInstance(getApplicationContext()).storePreferencesUserLogin(response.body().getUserData());
+                        Intent loginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(loginActivity);
+                        finish();
+                    } else {
+                        if (response.body().getResultCode().equals("Failure")) {
+                            pDialog.dismiss();
+                            Log.d("ACTUAL ERRORS::", response.body().getErrors());
+                            Toast.makeText(getApplicationContext(),response.body().getErrors(), Toast.LENGTH_SHORT).show();
+                            Log.d("ResponseError", "" + response.body());
+                        }
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RegisterActivityModel> call, Throwable t) {
                 pDialog.dismiss();
-                Log.d("Error",t.getMessage());
+                Log.d("Error", t.getMessage());
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

@@ -30,6 +30,10 @@ public class RegisterActivityModel {
     @Expose
     private String updatedAt;
 
+    @SerializedName("errors")
+    @Expose
+    private String errors;
+
     public RegisterActivityModel(Integer id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
@@ -99,5 +103,13 @@ public class RegisterActivityModel {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getErrors() {
+        return errors;
+    }
+
+    public void setErrors(String errors) {
+        this.errors = errors;
     }
 }
