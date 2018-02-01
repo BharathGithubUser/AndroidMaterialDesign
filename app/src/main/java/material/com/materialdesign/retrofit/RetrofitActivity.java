@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import material.com.materialdesign.MainActivity;
+import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +35,6 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
     Button retrofitApiArray;
     Button retrofitApiObject;
     Button next;
-
-    String baseUrl="http://laravel-example.000webhostapp.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +72,8 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.show();
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RequestRetrofitObjectResponseInterface request = retrofit.create(RequestRetrofitObjectResponseInterface.class);
@@ -105,7 +103,7 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
         pDialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RequestRetrofitArrayResponseInterface request = retrofit.create(RequestRetrofitArrayResponseInterface.class);

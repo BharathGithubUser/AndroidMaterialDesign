@@ -24,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -57,15 +59,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+
     String response;
-    private static final String BASE_URL = "http://10.0.2.2:8000/api/v1/login";
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -76,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView mRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +97,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(getCurrentFocus()!=null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
                 attemptLogin();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mRegister = findViewById(R.id.register);
+        mRegister.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerActivity = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(registerActivity);
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -212,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 0;
     }
 
     /**
@@ -329,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     .build();
 
             Request request = new Request.Builder()
-                    .url(BASE_URL)
+                    .url(Constants.BASE_URL+"api/v1/login")
                     .post(requestBody)
                     .build();
             try {
@@ -345,21 +353,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final String result) {
             JSONObject responseObject;
-            mAuthTask=null;
+            mAuthTask = null;
             showProgress(false);
             try {
                 responseObject = new JSONObject(result);
 
-                if (responseObject.getString("Auth").equals("true")) {
-                    Intent mainActivity = new Intent(LoginActivity.this,MainActivity.class);
+                if (responseObject.getString("resultCode").equals("Success") &&
+                    responseObject.getString("auth").equals("true")){
+                    Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(mainActivity);
+                    finish();
                 } else {
-                    if(responseObject.getString("Auth").equals("Invalid Password")) {
+                    if (responseObject.getString("auth").equals("Invalid Password")) {
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
-                    }else if(responseObject.getString("Auth").equals("Invalid Email")){
-                        mEmailView.setError("Invalid Email");
-                        mPasswordView.requestFocus();
+                    } else if (responseObject.getString("auth").equals("Invalid Email")) {
+                        mEmailView.setError("wrong Email");
+                        mEmailView.requestFocus();
                     }
                 }
             } catch (Exception e) {

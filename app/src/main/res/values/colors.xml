@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentNoActionBar">#4C23E2</color>
+    <color name="edit_text_box_color">#60CF20</color>
+    <color name="blue_box_color">#4C23E2</color>
 </resources>

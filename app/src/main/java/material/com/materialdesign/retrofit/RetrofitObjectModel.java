@@ -1,4 +1,4 @@
-package material.com.materialdesign.retrofit; ;
+package material.com.materialdesign.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

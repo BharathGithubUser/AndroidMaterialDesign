@@ -21,8 +21,9 @@
 
     <ScrollView
         android:id="@+id/login_form"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -35,9 +36,10 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
+                    android:background="@drawable/edit_text_box"
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -50,9 +52,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:background="@drawable/edit_text_box"
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="@string/prompt_password"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -66,11 +69,22 @@
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:background="@drawable/blue_box"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:textSize="15sp"
+                android:textColor="#6769F1"
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/register"/>
 
         </LinearLayout>
     </ScrollView>

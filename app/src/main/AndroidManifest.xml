@@ -24,13 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="material.com.materialdesign.MainActivity" />
+        <activity android:name="material.com.materialdesign.MainActivity" android:theme="@style/AppThemeNoActionBar"/>
         <activity android:name="material.com.materialdesign.volley.VolleyApi" />
         <activity android:name="material.com.materialdesign.retrofit.RetrofitActivity" />
         <activity android:name="material.com.materialdesign.async_task.AsyncTaskActivity" />
         <activity
             android:name="material.com.materialdesign.LoginActivity"
-            android:label="@string/title_activity_login"/>
+            android:label="@string/title_activity_login" />
+        <activity android:name="material.com.materialdesign.RegisterActivity"></activity>
     </application>
 
 </manifest>

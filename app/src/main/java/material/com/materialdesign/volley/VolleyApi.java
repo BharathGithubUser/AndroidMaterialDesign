@@ -25,6 +25,7 @@ import java.util.List;
 import material.com.materialdesign.adapter.RecyclerAdapterAsyncVolley;
 import material.com.materialdesign.model.RecyclerModelAsyncVolley;
 import material.com.materialdesign.retrofit.RetrofitActivity;
+import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 
 public class VolleyApi extends AppCompatActivity implements View.OnClickListener {
@@ -70,8 +71,7 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
         pDialog.setMessage("Loading...");
         pDialog.show();
         // Adding request to request queue
-        String url = "https://laravel-example.000webhostapp.com/api/v1/get_user_details?Id=5";
-        JsonArrayRequest request = new JsonArrayRequest(url,
+        JsonArrayRequest request = new JsonArrayRequest(Constants.BASE_URL+"api/v1/get_user_details?Id=5",
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray responseArray) {
