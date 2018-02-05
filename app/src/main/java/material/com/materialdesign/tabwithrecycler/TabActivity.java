@@ -27,10 +27,12 @@ public class TabActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
 
         tabLayout.addTab(tabLayout.newTab().setText("DataFromAPI"));
-        tabLayout.addTab(tabLayout.newTab().setText("DataWebView"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tapped Data In FirstTab"));
+        tabLayout.addTab(tabLayout.newTab().setText("WebViewTab"));
 
         viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(viewPagerAdapter);
 
     }
 
@@ -48,6 +50,8 @@ public class TabActivity extends AppCompatActivity {
                 case 0:
                     return new TabDataFromApi();
                 case 1:
+                    return new TabDataFromApi();
+                case 2:
                     return new TabDataFromApi();
                 default:
                     return null;
