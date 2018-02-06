@@ -46,12 +46,6 @@ public class RecyclerTabAdapter extends RecyclerView.Adapter<RecyclerTabAdapter.
     public void onBindViewHolder(HolderView holder, final int position) {
         holder.textViewSno.setText("" + topics.get(position).getSno());
         holder.textViewData.setText(topics.get(position).getData());
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClick.onClicked(position);
-            }
-        });
     }
 
     @Override

@@ -26,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TabDataFromApi extends Fragment implements RecyclerTabAdapter.OnItemClicked{
+public class TabDataFromApi extends Fragment {
     Activity activity;
     Context context;
     RecyclerView recyclerView;
@@ -58,7 +58,9 @@ public class TabDataFromApi extends Fragment implements RecyclerTabAdapter.OnIte
         recyclerLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerLayoutManager);
         callRetrofit();
+/*
         recyclerTabAdapter.setOnClick((RecyclerTabAdapter.OnItemClicked)this,context);
+*/
 
 
 /*
@@ -105,7 +107,7 @@ public class TabDataFromApi extends Fragment implements RecyclerTabAdapter.OnIte
 
     }
 
-    @Override
+/*    @Override
     public void onClicked(int position) {
         switch (position) {
 
@@ -129,7 +131,7 @@ public class TabDataFromApi extends Fragment implements RecyclerTabAdapter.OnIte
                 break;
 
         }
-    }
+    }*/
     interface OnItemClick{
         void onClicked();
     }
