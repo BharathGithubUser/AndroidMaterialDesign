@@ -3,7 +3,6 @@ package material.com.materialdesign.tabwithrecycler;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ public class RecyclerTabModel {
 
     @SerializedName("Topics")
     @Expose
-    private List<Topic> topics = null;
+    private  List<Topic> topics;
 
     public RecyclerTabModel(List<Topic> topics) {
         this.topics = topics;
@@ -28,6 +27,8 @@ public class RecyclerTabModel {
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
+
+
     public static  final class Topic {
 
         @SerializedName("sno")
@@ -57,6 +58,8 @@ public class RecyclerTabModel {
         public void setData(String data) {
             this.data = data;
         }
+
+
 
     }
 }

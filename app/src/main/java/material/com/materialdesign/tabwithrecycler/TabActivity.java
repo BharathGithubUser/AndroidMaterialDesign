@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import material.com.materialdesignexample.R;
 
@@ -14,7 +16,7 @@ public class TabActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
-
+    int tabPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,31 @@ public class TabActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("DataFromAPI"));
         tabLayout.addTab(tabLayout.newTab().setText("Tapped Data In FirstTab"));
         tabLayout.addTab(tabLayout.newTab().setText("WebViewTab"));
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        Log.e("Position", String.valueOf(tabPosition));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.e("Postion tab", String.valueOf(tab.getPosition()));
+                viewPager.setCurrentItem(tab.getPosition());
+                tabPosition=tab.getPosition();
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.i("", "on tab unselected team");
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Log.i("", "on tab reselected team ");
+            }
+        });
 
         viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
