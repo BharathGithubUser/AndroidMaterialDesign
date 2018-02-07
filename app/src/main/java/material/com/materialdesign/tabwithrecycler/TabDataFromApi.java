@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
@@ -35,6 +36,7 @@ public class TabDataFromApi extends Fragment {
     View rootView;
     List<RecyclerTabModel> rowDataFromApi;
     ProgressDialog pDialog;
+    TabDataFromApi.SetTabData setTabData;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,16 @@ public class TabDataFromApi extends Fragment {
         recyclerTabAdapter = new RecyclerTabAdapter(rowData.getTopics());
         recyclerView.setAdapter(recyclerTabAdapter);*/
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            setTabData = (SetTabData) activity;
+        } catch (ClassCastException e) {
+            Log.i("", "" + e);
+        }
+    }
+
 
     private void callRetrofit() {
         pDialog = new ProgressDialog(getActivity());
@@ -77,7 +89,7 @@ public class TabDataFromApi extends Fragment {
             @Override
             public void onResponse(Call<RecyclerTabModel> call, Response<RecyclerTabModel> response) {
                 RecyclerTabModel recyclerTabModel = response.body();
-                List<RecyclerTabModel.Topic> topics = recyclerTabModel.getTopics();
+                final List<RecyclerTabModel.Topic> topics = recyclerTabModel.getTopics();
                 rowDataFromApi = new ArrayList(Arrays.asList(response.body()));
                 OnItemClick itemClickListener = new OnItemClick() {
                     @Override
@@ -85,6 +97,9 @@ public class TabDataFromApi extends Fragment {
                         switch (position) {
 
                             case 0:
+                                Bundle data = new Bundle();
+                                data.putString("Data",topics.get(position).getData());
+                                setTabData.setTappedData(position,data);
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
@@ -124,7 +139,7 @@ public class TabDataFromApi extends Fragment {
     interface OnItemClick {
         void onClicked(int position);
     }
-    interface setTabData{
+    interface SetTabData{
         void setTappedData(int position,Bundle bundle);
     }
 }

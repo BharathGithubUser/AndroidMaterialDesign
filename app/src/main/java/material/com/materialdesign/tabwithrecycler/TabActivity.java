@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import material.com.materialdesignexample.R;
 
-public class TabActivity extends AppCompatActivity implements TabDataFromApi.setTabData {
+public class TabActivity extends AppCompatActivity implements TabDataFromApi.SetTabData {
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
     int tabPosition;
+    Bundle getRecyclerTappeddata;
+    int getRecyclerTappedPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,9 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.set
 
     @Override
     public void setTappedData(int position, Bundle bundle) {
-
+        viewPager.setCurrentItem(1);
+        this.getRecyclerTappeddata = bundle;
+        this.getRecyclerTappedPosition = position;
     }
 
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -82,9 +86,9 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.set
                 case 0:
                     return new TabDataFromApi();
                 case 1:
-                    return new TappedDataInFirstTab();
+                    return TappedDataInFirstTab.createInstance(getRecyclerTappedPosition,getRecyclerTappeddata);
                 case 2:
-                    return new TabDataFromApi();
+                    return new TabWebView();
                 default:
                     return null;
             }

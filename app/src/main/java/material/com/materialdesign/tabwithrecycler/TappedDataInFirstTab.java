@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,19 +37,14 @@ public class TappedDataInFirstTab extends Fragment {
     LinearLayoutManager recyclerLayoutManager;
     RecyclerTabAdapter recyclerTabAdapter;
     View rootView;
-    RecyclerTabModel rowData;
     Bundle bundle;
-
-    /*
-        List<RecyclerTabModel.Topic> rowDataContent;
-    */
     List<RecyclerTabModel> rowDataFromApi;
     ProgressDialog pDialog;
-    TabDataFromApi.OnItemClick onClickListener;
+    int getTappedPosition;
 
-    public static TappedDataInFirstTab createInstance(int position,Bundle bundle) {
+    public static TappedDataInFirstTab createInstance(int position, Bundle bundle) {
         TappedDataInFirstTab tappedDataInFirstTab = new TappedDataInFirstTab();
-        tappedDataInFirstTab.setArguments(bundle);
+        tappedDataInFirstTab.getTappedDetails(position, bundle);
         return tappedDataInFirstTab;
     }
 
@@ -59,7 +54,6 @@ public class TappedDataInFirstTab extends Fragment {
 
         rootView = inflater.inflate(R.layout.tab_datafrom_api, container, false);
         activity = getActivity();
-        context = getActivity().getApplicationContext();
         bundle = getArguments();
         iniViews();
         return rootView;
@@ -71,11 +65,6 @@ public class TappedDataInFirstTab extends Fragment {
         recyclerView.setLayoutManager(recyclerLayoutManager);
         callRetrofit();
 /*
-        recyclerTabAdapter.setOnClick((RecyclerTabAdapter.OnItemClicked)this,context);
-*/
-
-
-/*
         //for doing this you should have List<RecyclerTabModel.Topic>
         rowDataContent = new ArrayList<>();
         rowDataContent.add(new RecyclerTabModel.Topic(1, "data"));
@@ -85,6 +74,11 @@ public class TappedDataInFirstTab extends Fragment {
         rowData = new RecyclerTabModel(rowDataContent);
         recyclerTabAdapter = new RecyclerTabAdapter(rowData.getTopics());
         recyclerView.setAdapter(recyclerTabAdapter);*/
+    }
+
+    private void getTappedDetails(int position, Bundle bundle) {
+        this.getTappedPosition = position;
+        this.bundle = bundle;
     }
 
     private void callRetrofit() {
@@ -141,63 +135,8 @@ public class TappedDataInFirstTab extends Fragment {
             }
         });
 
-
     }
 
-    private void callRecyclerOnClickListener() {
-        TabDataFromApi.OnItemClick itemClick = new TabDataFromApi.OnItemClick() {
-            @Override
-            public void onClicked(int position) {
-                switch (position) {
-
-                    case 0:
-                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case 3:
-                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 4:
-                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }
-
-    /*    @Override
-        public void onClicked(int position) {
-            switch (position) {
-
-                case 0:
-                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                    break;
-                case 1:
-                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                    break;
-
-                case 3:
-                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                    break;
-                case 4:
-                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
-
-            }
-        }*/
     interface OnItemClick {
         void onClicked(int position);
     }
