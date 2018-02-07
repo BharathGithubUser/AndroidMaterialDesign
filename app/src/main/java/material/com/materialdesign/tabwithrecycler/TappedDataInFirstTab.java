@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,22 +26,41 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TabDataFromApi extends Fragment {
+/**
+ * Created by user on 7/2/18.
+ */
+
+public class TappedDataInFirstTab extends Fragment {
     Activity activity;
     Context context;
     RecyclerView recyclerView;
     LinearLayoutManager recyclerLayoutManager;
     RecyclerTabAdapter recyclerTabAdapter;
     View rootView;
+    RecyclerTabModel rowData;
+    Bundle bundle;
+
+    /*
+        List<RecyclerTabModel.Topic> rowDataContent;
+    */
     List<RecyclerTabModel> rowDataFromApi;
     ProgressDialog pDialog;
+    TabDataFromApi.OnItemClick onClickListener;
+
+    public static TappedDataInFirstTab createInstance(int position,Bundle bundle) {
+        TappedDataInFirstTab tappedDataInFirstTab = new TappedDataInFirstTab();
+        tappedDataInFirstTab.setArguments(bundle);
+        return tappedDataInFirstTab;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         rootView = inflater.inflate(R.layout.tab_datafrom_api, container, false);
         activity = getActivity();
         context = getActivity().getApplicationContext();
+        bundle = getArguments();
         iniViews();
         return rootView;
     }
@@ -51,6 +70,11 @@ public class TabDataFromApi extends Fragment {
         recyclerLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerLayoutManager);
         callRetrofit();
+/*
+        recyclerTabAdapter.setOnClick((RecyclerTabAdapter.OnItemClicked)this,context);
+*/
+
+
 /*
         //for doing this you should have List<RecyclerTabModel.Topic>
         rowDataContent = new ArrayList<>();
@@ -79,7 +103,7 @@ public class TabDataFromApi extends Fragment {
                 RecyclerTabModel recyclerTabModel = response.body();
                 List<RecyclerTabModel.Topic> topics = recyclerTabModel.getTopics();
                 rowDataFromApi = new ArrayList(Arrays.asList(response.body()));
-                OnItemClick itemClickListener = new OnItemClick() {
+                TabDataFromApi.OnItemClick itemClickListener = new TabDataFromApi.OnItemClick() {
                     @Override
                     public void onClicked(int position) {
                         switch (position) {
@@ -93,7 +117,6 @@ public class TabDataFromApi extends Fragment {
                             case 2:
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
-
                             case 3:
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
@@ -121,10 +144,61 @@ public class TabDataFromApi extends Fragment {
 
     }
 
+    private void callRecyclerOnClickListener() {
+        TabDataFromApi.OnItemClick itemClick = new TabDataFromApi.OnItemClick() {
+            @Override
+            public void onClicked(int position) {
+                switch (position) {
+
+                    case 0:
+                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 3:
+                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
+
+    /*    @Override
+        public void onClicked(int position) {
+            switch (position) {
+
+                case 0:
+                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case 3:
+                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+                    Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+
+            }
+        }*/
     interface OnItemClick {
         void onClicked(int position);
-    }
-    interface setTabData{
-        void setTappedData(int position,Bundle bundle);
     }
 }

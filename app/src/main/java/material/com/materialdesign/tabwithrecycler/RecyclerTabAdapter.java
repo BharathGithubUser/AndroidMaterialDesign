@@ -19,21 +19,12 @@ import material.com.materialdesignexample.R;
 public class RecyclerTabAdapter extends RecyclerView.Adapter<RecyclerTabAdapter.HolderView> {
     List<RecyclerTabModel> rowData;
     List<RecyclerTabModel.Topic> topics;
-    private OnItemClicked onClick;
     TabDataFromApi.OnItemClick OnItemClickListener;
-    Context context;
 
-    interface OnItemClicked{
-        void onClicked(int position);
-    }
-
-    public void setOnClick(OnItemClicked onClick,Context context){
-        this.onClick = onClick;
-        this.context = context;
-    }
-    public RecyclerTabAdapter(List<RecyclerTabModel> rowData, List<RecyclerTabModel.Topic> topics,TabDataFromApi.OnItemClick listener) {
+    public RecyclerTabAdapter(List<RecyclerTabModel> rowData, List<RecyclerTabModel.Topic> topics, TabDataFromApi.OnItemClick itemClicklistener) {
         this.rowData = rowData;
         this.topics = topics;
+        this.OnItemClickListener = itemClicklistener;
     }
 
     @Override
@@ -50,15 +41,22 @@ public class RecyclerTabAdapter extends RecyclerView.Adapter<RecyclerTabAdapter.
 
     @Override
     public int getItemCount() {
-       return topics.size();
+        return topics.size();
     }
 
     public class HolderView extends RecyclerView.ViewHolder {
         TextView textViewSno;
         TextView textViewData;
         CardView rootView;
+
         public HolderView(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    OnItemClickListener.onClicked(getPosition());
+                }
+            });
             rootView = itemView.findViewById(R.id.cardview);
             textViewSno = itemView.findViewById(R.id.sno);
             textViewData = itemView.findViewById(R.id.rowData);

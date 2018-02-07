@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import material.com.materialdesignexample.R;
 
-public class TabActivity extends AppCompatActivity {
+public class TabActivity extends AppCompatActivity implements TabDataFromApi.setTabData {
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
@@ -63,6 +63,11 @@ public class TabActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void setTappedData(int position, Bundle bundle) {
+
+    }
+
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
         int tabCount;
 
@@ -77,7 +82,7 @@ public class TabActivity extends AppCompatActivity {
                 case 0:
                     return new TabDataFromApi();
                 case 1:
-                    return new TabDataFromApi();
+                    return new TappedDataInFirstTab();
                 case 2:
                     return new TabDataFromApi();
                 default:
