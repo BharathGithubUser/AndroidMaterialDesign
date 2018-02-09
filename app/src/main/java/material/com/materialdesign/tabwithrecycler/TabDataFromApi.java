@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import material.com.materialdesign.mapintegration.MapActivity;
 import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 import retrofit2.Call;
@@ -37,7 +38,9 @@ public class TabDataFromApi extends Fragment {
     List<RecyclerTabModel> rowDataFromApi;
     ProgressDialog pDialog;
     TabDataFromApi.SetTabData setTabData;
-
+    public static TabDataFromApi createInstance(){
+        return  new TabDataFromApi();
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,11 +67,16 @@ public class TabDataFromApi extends Fragment {
         recyclerTabAdapter = new RecyclerTabAdapter(rowData.getTopics());
         recyclerView.setAdapter(recyclerTabAdapter);*/
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            setTabData = (SetTabData) activity;
+            if (activity instanceof MapActivity) {
+                setTabData = null;
+            } else {
+                setTabData = (SetTabData) activity;
+            }
         } catch (ClassCastException e) {
             Log.i("", "" + e);
         }
@@ -97,12 +105,11 @@ public class TabDataFromApi extends Fragment {
                         switch (position) {
 
                             case 0:
-                                Bundle data = new Bundle();
-                                data.putString("Data",topics.get(position).getData());
-                                setTabData.setTappedData(position,data);
+                                setTabData.setTappedData(position, topics.get(position).getData());
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
+                                setTabData.setTappedData(position, topics.get(position).getData());
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
                             case 2:
@@ -139,7 +146,8 @@ public class TabDataFromApi extends Fragment {
     interface OnItemClick {
         void onClicked(int position);
     }
-    interface SetTabData{
-        void setTappedData(int position,Bundle bundle);
+
+    interface SetTabData {
+        void setTappedData(int position, String data);
     }
 }

@@ -35,16 +35,17 @@ public class TappedDataInFirstTab extends Fragment {
     Context context;
     RecyclerView recyclerView;
     LinearLayoutManager recyclerLayoutManager;
-    RecyclerTabAdapter recyclerTabAdapter;
+    RecyclerTappedAdapter recyclerTappedAdapter;
     View rootView;
-    Bundle bundle;
+    String data;
     List<RecyclerTabModel> rowDataFromApi;
+    List<TappedDataModel> tappedData;
     ProgressDialog pDialog;
     int getTappedPosition;
 
-    public static TappedDataInFirstTab createInstance(int position, Bundle bundle) {
+    public static TappedDataInFirstTab createInstance(int position, String data) {
         TappedDataInFirstTab tappedDataInFirstTab = new TappedDataInFirstTab();
-        tappedDataInFirstTab.getTappedDetails(position, bundle);
+        tappedDataInFirstTab.getTappedDetails(position, data);
         return tappedDataInFirstTab;
     }
 
@@ -52,36 +53,28 @@ public class TappedDataInFirstTab extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.tab_datafrom_api, container, false);
+        rootView = inflater.inflate(R.layout.fragment_tapped_data, container, false);
         activity = getActivity();
-        bundle = getArguments();
         iniViews();
         return rootView;
     }
 
     private void iniViews() {
-        recyclerView = rootView.findViewById(R.id.recycler_data_from_api);
+        recyclerView = rootView.findViewById(R.id.recyclerview_tapped_data);
         recyclerLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerLayoutManager);
-        callRetrofit();
-/*
-        //for doing this you should have List<RecyclerTabModel.Topic>
-        rowDataContent = new ArrayList<>();
-        rowDataContent.add(new RecyclerTabModel.Topic(1, "data"));
-        rowDataContent.add(new RecyclerTabModel.Topic(2, "data"));
-        rowDataContent.add(new RecyclerTabModel.Topic(3, "data"));
-        rowDataContent.add(new RecyclerTabModel.Topic(4, "data"));
-        rowData = new RecyclerTabModel(rowDataContent);
-        recyclerTabAdapter = new RecyclerTabAdapter(rowData.getTopics());
-        recyclerView.setAdapter(recyclerTabAdapter);*/
+        tappedData = new ArrayList<>();
+        tappedData.add(new TappedDataModel(getTappedPosition,data));
+        recyclerTappedAdapter = new RecyclerTappedAdapter(tappedData);
+        recyclerView.setAdapter(recyclerTappedAdapter);
     }
 
-    private void getTappedDetails(int position, Bundle bundle) {
+    private void getTappedDetails(int position, String data) {
         this.getTappedPosition = position;
-        this.bundle = bundle;
+        this.data = data;
     }
 
-    private void callRetrofit() {
+/*    private void callRetrofit() {
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.show();
@@ -124,6 +117,7 @@ public class TappedDataInFirstTab extends Fragment {
                 };
                 recyclerTabAdapter = new RecyclerTabAdapter(rowDataFromApi, topics, itemClickListener);
                 recyclerView.setAdapter(recyclerTabAdapter);
+                recyclerView.findViewById(getTappedPosition);
                 pDialog.dismiss();
             }
 
@@ -135,7 +129,7 @@ public class TappedDataInFirstTab extends Fragment {
             }
         });
 
-    }
+    }*/
 
     interface OnItemClick {
         void onClicked(int position);

@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import dmax.dialog.SpotsDialog;
 import material.com.materialdesignexample.R;
 
 /**
@@ -22,14 +23,17 @@ import material.com.materialdesignexample.R;
 public class TabWebView extends Fragment {
     View tabWebView;
     WebView webView;
-    ProgressDialog pDialog;
+    SpotsDialog pDialog;
+    public static TabWebView createInstance(){
+        return new TabWebView();
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         tabWebView = inflater.inflate(R.layout.fragment_tabwebview,container,false);
         webView = tabWebView.findViewById(R.id.tab_web_view);
         webView.clearView();
-        pDialog = new ProgressDialog(getActivity());
+        pDialog = new SpotsDialog(getActivity(),R.style.Custom);
         webView.loadUrl("https://www.google.com");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);

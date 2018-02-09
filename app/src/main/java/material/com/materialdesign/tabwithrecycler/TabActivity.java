@@ -8,7 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import material.com.materialdesignexample.R;
 
@@ -17,8 +21,10 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.Set
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
     int tabPosition;
-    Bundle getRecyclerTappeddata;
+    String getRecyclerTappeddata;
     int getRecyclerTappedPosition;
+    List<Fragment> fragments;
+    List<Fragment> currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +35,10 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.Set
     private void initViews() {
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
-
-        tabLayout.addTab(tabLayout.newTab().setText("DataFromAPI"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tapped Data In FirstTab"));
-        tabLayout.addTab(tabLayout.newTab().setText("WebViewTab"));
-
+        fragments = getFragments();
+        tabLayout.addTab(tabLayout.newTab().setText("Data from api"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tapped Data"));
+        tabLayout.addTab(tabLayout.newTab().setText("WebView"));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         Log.e("Position", String.valueOf(tabPosition));
@@ -43,7 +48,7 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.Set
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.e("Postion tab", String.valueOf(tab.getPosition()));
                 viewPager.setCurrentItem(tab.getPosition());
-                tabPosition=tab.getPosition();
+                tabPosition = tab.getPosition();
 
 
             }
@@ -60,43 +65,53 @@ public class TabActivity extends AppCompatActivity implements TabDataFromApi.Set
         });
 
         viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(viewPagerAdapter);
 
     }
 
     @Override
-    public void setTappedData(int position, Bundle bundle) {
-        viewPager.setCurrentItem(1);
-        this.getRecyclerTappeddata = bundle;
+    public void setTappedData(int position, String data) {
+        this.getRecyclerTappeddata = data;
         this.getRecyclerTappedPosition = position;
+        if (getRecyclerTappeddata != null && getRecyclerTappedPosition != 0) {
+            currentFragment.add(TappedDataInFirstTab.createInstance(getRecyclerTappedPosition,getRecyclerTappeddata));
+            viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
+            viewPagerAdapter.notifyDataSetChanged();
+            ViewGroup parent = (ViewGroup) viewPager.getParent();
+            if (parent != null) {
+                parent.removeView(viewPager);
+            }
+            viewPager.setAdapter(viewPagerAdapter);
+            viewPager.setCurrentItem(1);
+
+        }
+    }
+
+    public List<Fragment> getFragments() {
+        currentFragment = new ArrayList<Fragment>();
+        currentFragment.add(TabDataFromApi.createInstance());
+        currentFragment.add(TabWebView.createInstance());
+        return currentFragment;
     }
 
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        int tabCount;
+        private List<Fragment> fragment;
 
-        public ViewPagerAdapter(FragmentManager fm, int tabCount) {
+        public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
             super(fm);
-            this.tabCount = tabCount;
+            this.fragment = fragments;
         }
+
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new TabDataFromApi();
-                case 1:
-                    return TappedDataInFirstTab.createInstance(getRecyclerTappedPosition,getRecyclerTappeddata);
-                case 2:
-                    return new TabWebView();
-                default:
-                    return null;
-            }
+            return this.fragment.get(position);
         }
 
         @Override
         public int getCount() {
-            return tabCount;
+            return this.fragment.size();
         }
     }
 }
