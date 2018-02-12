@@ -49,6 +49,7 @@
         <activity android:name="material.com.materialdesign.RegisterActivity" />
         <activity android:name="material.com.materialdesign.tabwithrecycler.TabActivity" />
         <activity android:name="material.com.materialdesign.mapintegration.MapActivity"/>
+        <activity android:name="material.com.materialdesign.room.RoomDatabaseActivity" />
     </application>
 
 </manifest>

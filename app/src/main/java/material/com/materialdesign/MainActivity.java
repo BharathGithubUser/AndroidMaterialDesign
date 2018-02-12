@@ -15,6 +15,7 @@ import material.com.materialdesign.async_task.AsyncTaskActivity;
 import material.com.materialdesign.mapintegration.MapActivity;
 import material.com.materialdesign.model.RecyclerModelMainActivity;
 import material.com.materialdesign.retrofit.RetrofitActivity;
+import material.com.materialdesign.room.RoomDatabaseActivity;
 import material.com.materialdesign.tabwithrecycler.TabActivity;
 import material.com.materialdesign.volley.VolleyApi;
 import material.com.materialdesignexample.R;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
         rowData.add(new RecyclerModelMainActivity("Tab with Recycler view", R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Slider Image Window", R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Google Maps Integration", R.drawable.ic_toys_black_24dp));
+        rowData.add(new RecyclerModelMainActivity("Room Database Example",R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Qr Code Scanner", R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("SearchOption in RecyclerView", R.drawable.ic_toys_black_24dp));
         adapterMainActivity = new RecyclerAdapterMainActivity(this, rowData);
@@ -73,11 +75,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
                 Intent tabWithRecycler = new Intent(this, TabActivity.class);
                 startActivity(tabWithRecycler);
                 break;
+
             case 4:
                 break;
+
             case 5:
                 Intent mapActivity = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(mapActivity);
+                break;
+
+            case 6:
+                Intent roomDatabase = new Intent(this, RoomDatabaseActivity.class);
+                startActivity(roomDatabase);
                 break;
 
             default:
