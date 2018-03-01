@@ -12,6 +12,8 @@ import java.util.List;
 
 import material.com.materialdesign.adapter.RecyclerAdapterMainActivity;
 import material.com.materialdesign.async_task.AsyncTaskActivity;
+import material.com.materialdesign.headerfooterrecycler.HeaderFooterRecyclerActivity;
+import material.com.materialdesign.headerfooterrecycler.HeaderFooterRecyclerAdapter;
 import material.com.materialdesign.mapintegration.MapActivity;
 import material.com.materialdesign.model.RecyclerModelMainActivity;
 import material.com.materialdesign.retrofit.RetrofitActivity;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
         rowData.add(new RecyclerModelMainActivity("Google Maps Integration", R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Room Database Example",R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Qr Code Scanner", R.drawable.ic_toys_black_24dp));
-        rowData.add(new RecyclerModelMainActivity("SearchOption in RecyclerView", R.drawable.ic_toys_black_24dp));
+        rowData.add(new RecyclerModelMainActivity("Header and Footer RecyclerView", R.drawable.ic_toys_black_24dp));
         adapterMainActivity = new RecyclerAdapterMainActivity(this, rowData);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -88,7 +90,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
                 Intent roomDatabase = new Intent(this, RoomDatabaseActivity.class);
                 startActivity(roomDatabase);
                 break;
+            case 7:
+                break;
 
+            case 8:
+                Intent headerFooterRecycler = new Intent(this, HeaderFooterRecyclerActivity.class);
+                startActivity(headerFooterRecycler);
+                break;
             default:
                 break;
 
