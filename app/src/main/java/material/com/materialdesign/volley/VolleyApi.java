@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.adapter.RecyclerAdapterAsyncVolley;
+import material.com.materialdesign.volley.adapter.RecyclerAdapterAsyncVolley;
 import material.com.materialdesign.model.RecyclerModelAsyncVolley;
 import material.com.materialdesign.retrofit.RetrofitActivity;
 import material.com.materialdesign.utils.Constants;

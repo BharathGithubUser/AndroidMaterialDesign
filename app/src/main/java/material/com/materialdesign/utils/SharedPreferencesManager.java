@@ -3,7 +3,6 @@ package material.com.materialdesign.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import material.com.materialdesign.RegisterActivity;
 import material.com.materialdesign.model.RegisterActivityModel;
 
 /**

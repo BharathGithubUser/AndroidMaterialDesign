@@ -12,7 +12,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import material.com.materialdesign.MainActivity;
+import material.com.materialdesign.MainIndexScreenActivity;
 import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 import retrofit2.Call;
@@ -61,7 +61,7 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
             arrayRecyclerView.setVisibility(View.VISIBLE);
             retrofitApiArrayCall();
         } else if (view.getId() == R.id.next) {
-            Intent main = new Intent(this, MainActivity.class);
+            Intent main = new Intent(this, MainIndexScreenActivity.class);
             startActivity(main);
         } else if (view.getId() == R.id.retrofitapiobject){
             retrofitApiObjectCall();

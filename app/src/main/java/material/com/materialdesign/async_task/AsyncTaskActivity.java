@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.adapter.RecyclerAdapterAsyncVolley;
+import material.com.materialdesign.volley.adapter.RecyclerAdapterAsyncVolley;
 import material.com.materialdesign.model.RecyclerModelAsyncVolley;
 import material.com.materialdesign.volley.VolleyApi;
 import material.com.materialdesignexample.R;

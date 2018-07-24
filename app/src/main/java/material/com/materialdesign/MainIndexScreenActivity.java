@@ -10,10 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.adapter.RecyclerAdapterMainActivity;
+import material.com.materialdesign.volley.adapter.RecyclerAdapterMainActivity;
 import material.com.materialdesign.async_task.AsyncTaskActivity;
 import material.com.materialdesign.headerfooterrecycler.HeaderFooterRecyclerActivity;
-import material.com.materialdesign.headerfooterrecycler.HeaderFooterRecyclerAdapter;
 import material.com.materialdesign.mapintegration.MapActivity;
 import material.com.materialdesign.model.RecyclerModelMainActivity;
 import material.com.materialdesign.retrofit.RetrofitActivity;
@@ -22,7 +21,7 @@ import material.com.materialdesign.tabwithrecycler.TabActivity;
 import material.com.materialdesign.volley.VolleyApi;
 import material.com.materialdesignexample.R;
 
-public class MainActivity extends AppCompatActivity implements RecyclerAdapterMainActivity.OnItemClicked {
+public class MainIndexScreenActivity extends AppCompatActivity implements RecyclerAdapterMainActivity.OnItemClicked {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     Context progressDialogContext;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
         rowData.add(new RecyclerModelMainActivity("Room Database Example",R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Qr Code Scanner", R.drawable.ic_toys_black_24dp));
         rowData.add(new RecyclerModelMainActivity("Header and Footer RecyclerView", R.drawable.ic_toys_black_24dp));
+        rowData.add(new RecyclerModelMainActivity("Image Upload to server and display", R.drawable.ic_toys_black_24dp));
         adapterMainActivity = new RecyclerAdapterMainActivity(this, rowData);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
                 break;
 
             case 5:
-                Intent mapActivity = new Intent(MainActivity.this, MapActivity.class);
+                Intent mapActivity = new Intent(MainIndexScreenActivity.this, MapActivity.class);
                 startActivity(mapActivity);
                 break;
 
@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapterMa
             case 8:
                 Intent headerFooterRecycler = new Intent(this, HeaderFooterRecyclerActivity.class);
                 startActivity(headerFooterRecycler);
+                break;
+            case 9:
+                Intent imageUploadToServer = new Intent(this, HeaderFooterRecyclerActivity.class);
+                startActivity(imageUploadToServer);
                 break;
             default:
                 break;

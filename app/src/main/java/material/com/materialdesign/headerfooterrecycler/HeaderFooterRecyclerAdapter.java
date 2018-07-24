@@ -57,8 +57,6 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
 
-            itemViewHolder.itemTextView.setText("Recycler Item number:"+position);
-
         }else if(holder instanceof FooterViewHolder){
 
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;

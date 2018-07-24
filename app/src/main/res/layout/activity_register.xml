@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    tools:context="material.com.materialdesign.RegisterActivity">
+    tools:context="material.com.materialdesign.login_register.RegisterActivity">
 
     <EditText
         android:id="@+id/name"

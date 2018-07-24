@@ -40,6 +40,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.android.volley:volley:1.0.0'
+    implementation 'net.gotev:uploadservice:2.1'
 
     compile 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'

@@ -109,7 +109,6 @@ public class TabDataFromApi extends Fragment {
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
-                                setTabData.setTappedData(position, topics.get(position).getData());
                                 Toast.makeText(getActivity(), "Position" + position + "is Clicked", Toast.LENGTH_SHORT).show();
                                 break;
                             case 2:
