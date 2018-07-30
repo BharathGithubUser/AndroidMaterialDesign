@@ -1,31 +1,39 @@
 package material.com.materialdesign.image_upload_to_server;
 
 import android.Manifest;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
-
+import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
+import material.com.materialdesign.model.ImageUploadModel;
+import material.com.materialdesign.retrofit.RequestRetrofitObjectResponseInterface;
 import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImageUploadToServerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -64,36 +72,6 @@ public class ImageUploadToServerActivity extends AppCompatActivity implements Vi
         buttonChoose.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
     }
-
-
-    /*
-     * This is the method responsible for image upload
-     * We need the full image path and the name for the image in this method
-     * */
-    public void uploadMultipart() {
-        //getting name for the image
-        String name = editText.getText().toString().trim();
-
-        //getting the actual path of the image
-        String path = getPath(filePath);
-
-        //Uploading code
-        try {
-            String uploadId = UUID.randomUUID().toString();
-
-            //Creating a multi part request
-            new MultipartUploadRequest(this, uploadId, Constants.UPLOAD_URL)
-                    .addFileToUpload(path, "image") //Adding file
-                    .addParameter("name", name) //Adding text parameter to the request
-                    .setNotificationConfig(new UploadNotificationConfig())
-                    .setMaxRetries(2)
-                    .startUpload(); //Starting the upload
-
-        } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     //method to show file chooser
     private void showFileChooser() {
@@ -179,8 +157,60 @@ public class ImageUploadToServerActivity extends AppCompatActivity implements Vi
             showFileChooser();
         }
         if (v == buttonUpload) {
-            uploadMultipart();
+            uploadFile(filePath);
         }
     }
 
+    private void uploadFile(Uri filePath) {
+
+        //creating a file
+        File file = new File(getRealPathFromURI(filePath));
+
+        //creating request body for file
+        MultipartBody.Part imageFile = MultipartBody.Part.createFormData("imageFile", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+        String emailText = "b@g.com";
+        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), emailText);
+
+        //creating retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        //creating a call and calling the upload image method
+        RequestRetrofitObjectResponseInterface request = retrofit.create(RequestRetrofitObjectResponseInterface.class);
+        Call<ImageUploadModel> call = request.uploadImage(email, imageFile);
+        //finally performing the call
+        call.enqueue(new Callback<ImageUploadModel>() {
+            @Override
+            public void onResponse(Call<ImageUploadModel> call, Response<ImageUploadModel> response) {
+                if (response.body() != null) {
+                    Toast.makeText(getApplicationContext(), "File Uploaded Successfully...", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageUploadModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /*
+     * This method is fetching the absolute path of the image file
+     * if you want to upload other kind of files like .pdf, .docx
+     * you need to make changes on this method only
+     * Rest part will be the same
+     * */
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
 }

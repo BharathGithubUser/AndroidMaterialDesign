@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import material.com.materialdesign.image_upload_to_server.ImageUploadToServerActivity;
 import material.com.materialdesign.volley.adapter.RecyclerAdapterMainActivity;
 import material.com.materialdesign.async_task.AsyncTaskActivity;
 import material.com.materialdesign.headerfooterrecycler.HeaderFooterRecyclerActivity;
@@ -98,7 +99,7 @@ public class MainIndexScreenActivity extends AppCompatActivity implements Recycl
                 startActivity(headerFooterRecycler);
                 break;
             case 9:
-                Intent imageUploadToServer = new Intent(this, HeaderFooterRecyclerActivity.class);
+                Intent imageUploadToServer = new Intent(this, ImageUploadToServerActivity.class);
                 startActivity(imageUploadToServer);
                 break;
             default:
