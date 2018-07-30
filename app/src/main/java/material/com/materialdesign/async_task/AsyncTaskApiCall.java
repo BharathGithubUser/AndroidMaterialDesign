@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.IOException;
+
+import material.com.materialdesign.utils.Constants;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -37,7 +39,7 @@ public class AsyncTaskApiCall extends AsyncTask<Integer,Void,JSONArray> {
         protected JSONArray doInBackground(Integer... integers) {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("https://laravel-example.000webhostapp.com/api/v1/get_user_details?Id=" + id)
+                    .url(Constants.BASE_URL+"api/v1/get_user_details?Id=" + id)
                     .build();
             try {
                 Response response = client.newCall(request).execute();

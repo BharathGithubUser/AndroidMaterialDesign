@@ -22,9 +22,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.MainActivity;
-import material.com.materialdesign.adapter.RecyclerAdapter;
-import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesign.volley.adapter.RecyclerAdapterAsyncVolley;
+import material.com.materialdesign.model.RecyclerModelAsyncVolley;
+import material.com.materialdesign.retrofit.RetrofitActivity;
+import material.com.materialdesign.utils.Constants;
 import material.com.materialdesignexample.R;
 
 public class VolleyApi extends AppCompatActivity implements View.OnClickListener {
@@ -32,9 +33,9 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
     ProgressDialog pDialog;
     String TAG;
     RecyclerView recyclerView;
-    RecyclerAdapter adapter;
+    RecyclerAdapterAsyncVolley adapter;
     GridLayoutManager layoutManager;
-    List<RecyclerModel> data_list;
+    List<RecyclerModelAsyncVolley> data_list;
     Button volleyApi, next;
 
     @Override
@@ -46,7 +47,7 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
         volleyApi=findViewById(R.id.volleyapi);
         next=findViewById(R.id.next);
         recyclerView = findViewById(R.id.volley_recyclerview);
-        adapter = new RecyclerAdapter(this, data_list);
+        adapter = new RecyclerAdapterAsyncVolley(this, data_list);
         layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -60,7 +61,7 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
             recyclerView.setVisibility(View.VISIBLE);
             volleyApiCall();
         } else if (view.getId() == R.id.next) {
-            Intent main = new Intent(this, MainActivity.class);
+            Intent main = new Intent(this, RetrofitActivity.class);
             startActivity(main);
         }
     }
@@ -70,15 +71,14 @@ public class VolleyApi extends AppCompatActivity implements View.OnClickListener
         pDialog.setMessage("Loading...");
         pDialog.show();
         // Adding request to request queue
-        String url = "https://laravel-example.000webhostapp.com/api/v1/get_user_details?Id=5";
-        JsonArrayRequest request = new JsonArrayRequest(url,
+        JsonArrayRequest request = new JsonArrayRequest(Constants.BASE_URL+"api/v1/get_user_details?Id=5",
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray responseArray) {
                         try {
                             for (int i = 0; i < responseArray.length(); i++) {
                                 JSONObject object = responseArray.getJSONObject(i);
-                                RecyclerModel data = new RecyclerModel(object.getString("name"), object.getString("image"), object.getInt("id"));
+                                RecyclerModelAsyncVolley data = new RecyclerModelAsyncVolley(object.getString("name"), object.getString("image"), object.getInt("id"));
                                 Log.d("TAG:DEBUGGER", "" + object.get("name") + object.get("image"));
                                 data_list.add(data);
                             }

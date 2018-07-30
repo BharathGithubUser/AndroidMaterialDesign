@@ -1,4 +1,4 @@
-package material.com.materialdesign;
+package material.com.materialdesign.async_task;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,20 +19,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import material.com.materialdesign.adapter.RecyclerAdapter;
-import material.com.materialdesign.async_task.AsyncTaskApiCall;
-import material.com.materialdesign.model.RecyclerModel;
+import material.com.materialdesign.volley.adapter.RecyclerAdapterAsyncVolley;
+import material.com.materialdesign.model.RecyclerModelAsyncVolley;
 import material.com.materialdesign.volley.VolleyApi;
 import material.com.materialdesignexample.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.ApiCallFinishedListener,View.OnClickListener {
+public class AsyncTaskActivity extends AppCompatActivity implements View.OnClickListener,AsyncTaskApiCall.ApiCallFinishedListener{
     RecyclerView recyclerView;
-    RecyclerAdapter adapter;
+    RecyclerAdapterAsyncVolley adapter;
     GridLayoutManager layoutManager;
-    List<RecyclerModel> data_list;
+    List<RecyclerModelAsyncVolley> data_list;
     Context progressDialogContext;
     AsyncTaskApiCall.ApiCallFinishedListener apiCallFinishedInterfaceReferrence;
     Button asynctask;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_async_task);
         data_list=new ArrayList<>();
         recyclerView=findViewById(R.id.async_recyclerview);
         asynctask=findViewById(R.id.asyncapi);
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
         layoutManager=new GridLayoutManager(this,1,GridLayoutManager.HORIZONTAL,false);
 
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new RecyclerAdapter(this,data_list);
+        adapter=new RecyclerAdapterAsyncVolley(this,data_list);
         recyclerView.setAdapter(adapter);
     }
 
@@ -71,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
                     JSONArray array=new JSONArray(response.body().string());
                     for(int i=0;i<array.length();i++) {
                         JSONObject object=array.getJSONObject(i);
-                        RecyclerModel data = new RecyclerModel(object.getString("name"), object.getString("image"),object.getInt("id"));
+                        RecyclerModelAsyncVolley data = new RecyclerModelAsyncVolley(object.getString("name"), object.getString("image"),object.getInt("id"));
                         Log.d("TAG:DEBUGGER", "" + object.get("name") + object.get("image"));
                         data_list.add(data);
                     }
 
-                } catch (IOException|JSONException e) {
+                } catch (IOException |JSONException e) {
                     e.printStackTrace();
                 }
                 return null;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
         try{
             for(int i=0;i<responseArray.length();i++) {
                 JSONObject object=responseArray.getJSONObject(i);
-                RecyclerModel data = new RecyclerModel(object.getString("name"), object.getString("image"),object.getInt("id"));
+                RecyclerModelAsyncVolley data = new RecyclerModelAsyncVolley(object.getString("name"), object.getString("image"),object.getInt("id"));
                 Log.d("TAG:DEBUGGER", "" + object.get("name") + object.get("image"));
                 data_list.add(data);
                 adapter.notifyDataSetChanged();
@@ -120,3 +119,4 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskApiCall.
         }
     }
 }
+
